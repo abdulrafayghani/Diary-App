@@ -2,13 +2,14 @@ import React, { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { User } from '../../interfaces/user.interface';
 import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers';
 import http from '../../services/api';
 import { saveToken, setAuthState } from './authSlice';
 import { setUser } from './userSlice';
 import { AuthResponse } from '../../services/mirage/routes/user';
 import { useAppDispatch } from '../../store';
 
-const schema = Yup.object().shape<any>({
+const schema = Yup.object().shape({
   username: Yup.string()
     .required('What? No username?')
     .max(16, 'Username cannot be longer than 16 characters'),
@@ -18,11 +19,11 @@ const schema = Yup.object().shape<any>({
 
 const Auth: FC = () => {
   const { handleSubmit, register, errors } = useForm<User>({
-    validationSchema: schema
-            
-});
+    resolver: yupResolver(schema),
+  });
 
-  const [isLogin, SetISLogin] = useState(true);
+  const [isLogin, setIslogin] = useState(true);
+  console.log(isLogin)
   const [loading, setLoading] = useState(false);
   const dispath = useAppDispatch();
 
@@ -47,16 +48,16 @@ const Auth: FC = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className="auth">
+      <div className="card">
         <form onSubmit={handleSubmit(submitForm)}>
-          <div>
+          <div className="inputWrapper">
             <input ref={register} name="username" placeholder="Username" />
             {errors && errors.username && (
               <p className="error"> {errors.username.message} </p>
             )}
           </div>
-          <div>
+          <div className="inputWrapper">
             <input
               ref={register}
               name="password"
@@ -68,7 +69,7 @@ const Auth: FC = () => {
             )}
           </div>
           {!isLogin && (
-            <div>
+            <div className="inputWrapper">
               <input
                 ref={register}
                 name="email"
@@ -79,13 +80,13 @@ const Auth: FC = () => {
               )}
             </div>
           )}
-          <div>
+          <div className="inputWrapper">
             <button type="submit" disabled={loading}>
               {isLogin ? 'Login' : 'Create Account'}
             </button>
           </div>
           <p
-            onClick={() => SetISLogin(!isLogin)}
+            onClick={() => setIslogin(!isLogin)}
             style={{ cursor: 'pointer', opacity: 0.7 }}
           >
             {isLogin ? 'No account? Create one' : 'Already have an account?'}
