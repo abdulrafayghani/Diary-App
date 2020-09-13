@@ -19,7 +19,7 @@ const auth = createSlice({
         state.token = payload;
       }
     },
-    clearToken: (state, { payload }: PayloadAction) => {
+    clearToken: (state) => {
       state.token = null;
     },
     setAuthState: (state, { payload }: PayloadAction<boolean>) => {
