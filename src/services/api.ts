@@ -24,6 +24,7 @@ http.interceptors.response.use(
           return null
       }
     }else if(request){
+      console.log('failed')
         showAlert('Request failed. Please try again.', 'error');
         return null;
     }
