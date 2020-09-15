@@ -17,8 +17,9 @@ const DiaryEntriesList: FC = () => {
   useEffect(() => {
     if (id != null) {
       http
-        .get<null, { entries: Entry[] }>(`/diaries/entries/:${id}`)
+        .get<null, { entries: Entry[] }>(`/diaries/entries/${id}`)
         .then(({ entries: _entries }) => {
+          console.log(entries)
           if (_entries) {
             const sortByLastUpdated = _entries.sort((a, b) => {
               return dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix();
@@ -27,7 +28,7 @@ const DiaryEntriesList: FC = () => {
           }
         });
     }
-  }, [id, dispatch]);
+  }, [id, dispatch, entries]);
 
   return (
     <div className="entries">
@@ -38,6 +39,7 @@ const DiaryEntriesList: FC = () => {
       </header>
       <ul>
         {entries.map((entry) => (
+          // console.log(entry)
           <li
             key={entry.id}
             onClick={() => {
