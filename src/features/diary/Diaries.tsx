@@ -10,7 +10,7 @@ import DiaryTile from './DiaryTile';
 import { User } from '../../interfaces/user.interface';
 import { useAppDispatch } from '../../store';
 import dayjs from 'dayjs';
-  
+
 const Diaries: FC = () => {
   const dispatch = useAppDispatch();
   const diaries = useSelector((state: rootState) => state.diaries);
@@ -19,7 +19,7 @@ const Diaries: FC = () => {
   useEffect(() => {
     const fetchDiairies = async () => {
       if (user) {
-        http.get<null, Diary[]>(`diairies/${user.id}`).then((data) => {
+        http.get<null, Diary[]>(`diaries/${user.id}`).then((data) => {
           if (data && data.length > 0) {
             const sortByUpatedAt = data.sort((a, b) => {
               return dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix();
@@ -65,8 +65,7 @@ const Diaries: FC = () => {
       });
       if (diary && user) {
         dispatch(addDiary([diary] as Diary[]));
-        dispatch(addDiary([diary] as Diary[]));
-        dispatch(setUser(_user));
+          dispatch(setUser(_user));
         return Swal.fire({
           titleText: 'All done!',
           confirmButtonText: 'OK!',
@@ -79,9 +78,6 @@ const Diaries: FC = () => {
   };
   return (
     <div style={{ padding: '1em 0.4em' }}>
-      {/* <Route path="/diary/:id">
-        <DiaryEntriesList />
-      </Route> */}
       <button onClick={createDiary}> Create New </button>
       {diaries.map((diary, idx) => (
         <DiaryTile key={idx} diary={diary} />

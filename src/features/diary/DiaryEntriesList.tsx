@@ -14,21 +14,24 @@ const DiaryEntriesList: FC = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
 
-  useEffect(() => {
-    if (id != null) {
-      http
-        .get<null, { entries: Entry[] }>(`/diaries/entries/${id}`)
-        .then(({ entries: _entries }) => {
-          console.log(entries)
-          if (_entries) {
-            const sortByLastUpdated = _entries.sort((a, b) => {
-              return dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix();
-            });
-            dispatch(setEntries(sortByLastUpdated));
-          }
-        });
-    }
-  }, [id, dispatch, entries]);
+  useEffect(
+    () => {
+      if (id != null) {
+        http
+          .get<null, { entries: Entry[] }>(`/diaries/entries/${id}`)
+          .then(({ entries: _entries }) => {
+            console.log(entries);
+            if (_entries) {
+              const sortByLastUpdated = _entries.sort((a, b) => {
+                return dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix();
+              });
+              dispatch(setEntries(sortByLastUpdated));
+            }
+          });
+      }
+    }, // eslint-disable-next-line
+    [id, dispatch]
+  );
 
   return (
     <div className="entries">
@@ -39,7 +42,6 @@ const DiaryEntriesList: FC = () => {
       </header>
       <ul>
         {entries.map((entry) => (
-          // console.log(entry)
           <li
             key={entry.id}
             onClick={() => {
@@ -56,4 +58,3 @@ const DiaryEntriesList: FC = () => {
 };
 
 export default DiaryEntriesList;
-

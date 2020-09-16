@@ -23,7 +23,6 @@ const Auth: FC = () => {
   });
 
   const [isLogin, setIslogin] = useState(true);
-  console.log(isLogin)
   const [loading, setLoading] = useState(false);
   const dispath = useAppDispatch();
 
