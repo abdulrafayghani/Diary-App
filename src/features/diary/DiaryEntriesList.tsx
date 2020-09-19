@@ -12,7 +12,7 @@ import { useAppDispatch } from '../../store';
 const DiaryEntriesList: FC = () => {
   const { entries } = useSelector((state: rootState) => state);
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+  const { id } = useParams<Entry>();
 
   useEffect(
     () => {
@@ -20,7 +20,6 @@ const DiaryEntriesList: FC = () => {
         http
           .get<null, { entries: Entry[] }>(`/diaries/entries/${id}`)
           .then(({ entries: _entries }) => {
-            console.log(entries);
             if (_entries) {
               const sortByLastUpdated = _entries.sort((a, b) => {
                 return dayjs(b.updatedAt).unix() - dayjs(a.updatedAt).unix();
@@ -37,7 +36,7 @@ const DiaryEntriesList: FC = () => {
     <div className="entries">
       <header>
         <Link to="/">
-          <h3>← Go Back</h3>
+          <h3>&larr; Go Back</h3>
         </Link>
       </header>
       <ul>

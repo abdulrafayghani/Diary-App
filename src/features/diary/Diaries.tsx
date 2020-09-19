@@ -10,6 +10,8 @@ import DiaryTile from './DiaryTile';
 import { User } from '../../interfaces/user.interface';
 import { useAppDispatch } from '../../store';
 import dayjs from 'dayjs';
+import { Route, Switch } from 'react-router-dom';
+import DiaryEntriesList from './DiaryEntriesList';
 
 const Diaries: FC = () => {
   const dispatch = useAppDispatch();
@@ -65,7 +67,7 @@ const Diaries: FC = () => {
       });
       if (diary && user) {
         dispatch(addDiary([diary] as Diary[]));
-          dispatch(setUser(_user));
+        dispatch(setUser(_user));
         return Swal.fire({
           titleText: 'All done!',
           confirmButtonText: 'OK!',
@@ -78,10 +80,17 @@ const Diaries: FC = () => {
   };
   return (
     <div style={{ padding: '1em 0.4em' }}>
-      <button onClick={createDiary}> Create New </button>
-      {diaries.map((diary, idx) => (
-        <DiaryTile key={idx} diary={diary} />
-      ))}
+      <Switch>
+        <Route path="/diary/:id">
+          <DiaryEntriesList />
+        </Route>
+        <Route path="/">
+          <button onClick={createDiary}> Create New </button>
+          {diaries.map((diary, idx) => (
+            <DiaryTile key={idx} diary={diary} />
+          ))}
+        </Route>
+      </Switch>
     </div>
   );
 };

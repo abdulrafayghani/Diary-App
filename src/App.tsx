@@ -1,7 +1,7 @@
 import React, { FC, lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import DiaryEntriesList from './features/diary/DiaryEntriesList';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+// import DiaryEntriesList from './features/diary/DiaryEntriesList';
 import { rootState } from './rootReducer';
 
 const Auth = lazy(() => import('./features/auth/Auth'))
@@ -12,14 +12,16 @@ const App: FC = () => {
   
   return (
     <Router>
-      <Routes>
+      <Switch>
         <Route path="/">
           <Suspense fallback={<p>...Loading</p>}>
             {isLoggedIn ? <Home /> : <Auth />}
           </Suspense>
-          <Route path='/diary/:id'><DiaryEntriesList/></Route>
+          {/* <div style={{ padding: '1em 0.4em' }}> */}
+          {/* <Route path='/diary/:id'><DiaryEntriesList/></Route> */}
+          {/* </div> */}
         </Route>
-      </Routes>
+      </Switch>
     </Router>
   );
 }

@@ -45,7 +45,6 @@ export const setupServer = (env?: string): Server => {
 
             this.get('diaries/entries/:id', diary.getEntries)
             this.get('diaries/:id', diary.getDiaries)
-            console.log(diary.getDiaries)
 
             this.post('auth/login', user.login)
             this.post('auth/signup', user.signup)
