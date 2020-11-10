@@ -17,9 +17,6 @@ const App: FC = () => {
           <Suspense fallback={<p>...Loading</p>}>
             {isLoggedIn ? <Home /> : <Auth />}
           </Suspense>
-          {/* <div style={{ padding: '1em 0.4em' }}> */}
-          {/* <Route path='/diary/:id'><DiaryEntriesList/></Route> */}
-          {/* </div> */}
         </Route>
       </Switch>
     </Router>

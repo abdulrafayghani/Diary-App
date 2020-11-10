@@ -6,6 +6,7 @@ import { Diary } from '../../interfaces/diary.interface';
 import { addDiary } from './diarySlice';
 import Swal from 'sweetalert2';
 import { setUser } from '../auth/userSlice';
+import { logout } from '../auth/authSlice';
 import DiaryTile from './DiaryTile';
 import { User } from '../../interfaces/user.interface';
 import { useAppDispatch } from '../../store';
@@ -80,6 +81,7 @@ const Diaries: FC = () => {
   };
   return (
     <div style={{ padding: '1em 0.4em' }}>
+      <button onClick={() => dispatch(logout())} >log out</button>
       <Switch>
         <Route path="/diary/:id">
           <DiaryEntriesList />
